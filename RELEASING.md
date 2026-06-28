@@ -21,6 +21,18 @@ publishes the jar to **Modrinth** and a **GitHub Release**.
    (Or: repo **Settings → Secrets and variables → Actions → New repository secret**, name
    `MODRINTH_TOKEN`.)
 
+3. **Modrinth project ID** — the workflow publishes by the base62 project **ID** (Modrinth rejects the
+   slug `baby-enderman` because `-` isn't valid base62). It reads it from a repo **variable**:
+   ```bash
+   gh variable set MODRINTH_PROJECT_ID -R rayui/baby-enderman --body "<your project ID>"
+   ```
+   Find the ID on the project's Settings page. (Currently set to `ZdjA7klp`.)
+
+4. **Submit the project for review.** A brand-new Modrinth project is a **draft** — only you can see
+   it, and the server/`itzg` can't download it yet. After the first version is uploaded (step below),
+   open the project and **Submit for review**; once a moderator approves it (usually hours), it's
+   public and downloadable.
+
 ## Cutting a release
 
 1. Bump `mod_version` in `gradle.properties` (e.g. `1.0.7`).

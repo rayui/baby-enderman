@@ -34,13 +34,14 @@ jobs:
           if-no-files-found: error
 
       # Only on a version tag (e.g. v1.0.7): publish the jar to Modrinth and a GitHub Release.
-      # modrinth-id is the base62 project ID (Modrinth rejects the slug "baby-enderman" — the '-'
-      # is invalid base62). Name / version / dependencies are auto-read from neoforge.mods.toml.
+      # modrinth-id is the base62 project ID from the MODRINTH_PROJECT_ID repo variable (Modrinth
+      # rejects the slug "baby-enderman" — the '-' is invalid base62). Name / version / dependencies
+      # are auto-read from neoforge.mods.toml.
       - name: Publish to Modrinth + GitHub Release
         if: startsWith(github.ref, 'refs/tags/v')
         uses: Kir-Antipov/mc-publish@v3.3
         with:
-          modrinth-id: ZdjA7klp
+          modrinth-id: ${{ vars.MODRINTH_PROJECT_ID }}
           modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
           files: build/libs/*.jar
