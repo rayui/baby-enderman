@@ -33,31 +33,14 @@ jobs:
           path: build/libs/*.jar
           if-no-files-found: error
 
-      # Modrinth's version endpoint wants the base62 project *ID*, not the slug (which has a '-').
-      # Resolve it from the slug at run time using the token (works even while the project is a draft).
-      - name: Resolve Modrinth project ID
-        if: startsWith(github.ref, 'refs/tags/v')
-        id: modrinth
-        env:
-          MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}
-        run: |
-          id=$(curl -sf -H "Authorization: $MODRINTH_TOKEN" \
-                 -H "User-Agent: rayui/baby-enderman (CI)" \
-                 https://api.modrinth.com/v2/project/baby-enderman | jq -r '.id // empty')
-          if [ -z "$id" ]; then
-            echo "::error::Could not resolve Modrinth project 'baby-enderman'. Check the slug exists and MODRINTH_TOKEN is valid."
-            exit 1
-          fi
-          echo "Resolved Modrinth project id: $id"
-          echo "id=$id" >> "$GITHUB_OUTPUT"
-
       # Only on a version tag (e.g. v1.0.7): publish the jar to Modrinth and a GitHub Release.
-      # Name / version / dependencies are auto-detected from the jar's neoforge.mods.toml.
+      # modrinth-id is the base62 project ID (Modrinth rejects the slug "baby-enderman" — the '-'
+      # is invalid base62). Name / version / dependencies are auto-read from neoforge.mods.toml.
       - name: Publish to Modrinth + GitHub Release
         if: startsWith(github.ref, 'refs/tags/v')
         uses: Kir-Antipov/mc-publish@v3.3
         with:
-          modrinth-id: ${{ steps.modrinth.outputs.id }}
+          modrinth-id: ZdjA7klp
           modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
           files: build/libs/*.jar
