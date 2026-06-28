@@ -1,0 +1,31 @@
+BABY ENDERMAN CUSTOM MINECRAFT MOB
+
+HOW DOES IT SPAWN?
+- Spawn egg
+- The egg is small, and black, with purple particles on the surface
+
+HOW BIG IS IT?
+- Outer max dimensions: 6x6x8 px (width, depth, height) -- half-size baby
+
+WHAT SHAPE IS IT? 
+- It is a baby Enderman.
+
+HOW DOES IT MOVE?
+- It walks like a normal Enderman. It is not able to teleport.
+
+WHAT DOES IT DO?
+- It is a companion. It can be tamed.
+- Until it is tame, it will just walk around and do occasional cute little jumps.
+- The baby Enderman is able to carry blocks just like a normal Enderman. It can carry grass, stone, dirt and sand blocks.
+- It is able to pick up any of the above blocks from its environment at random.
+- Unlike normal Enderman, baby Enderman cannot harm the player
+
+HOW DO I INTERACT WITH IT?
+- Once tame and sitting on your shoulder, the baby Enderman will occasionally gift the player random blocks from the above list
+- The baby Enderman can be tamed by giving it three emeralds (green gems for its green eyes; not ender pearls -- throwing a pearl teleports the player!)
+- Once it is tame, it will sit on your player's shoulder.
+
+WHAT VERSION OF MINECRAFT?
+- Java Edition
+- 1.21.11
+- Neoforge 21.11.42

@@ -1,0 +1,49 @@
+name: build
+
+on:
+  push:
+    branches: [ main ]
+    tags: [ 'v*' ]
+  pull_request:
+
+permissions:
+  contents: write   # needed so a tag build can create a GitHub Release
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: gradle
+
+      - name: Build
+        run: ./gradlew build --no-daemon --stacktrace
+
+      - name: Upload jar artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: baby-enderman-jar
+          path: build/libs/*.jar
+          if-no-files-found: error
+
+      # Only on a version tag (e.g. v1.0.7): publish the jar to Modrinth and a GitHub Release.
+      # Requires the MODRINTH_TOKEN repo secret and a Modrinth project with slug "baby-enderman".
+      # Name / version / dependencies are auto-detected from the jar's neoforge.mods.toml.
+      - name: Publish to Modrinth + GitHub Release
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: Kir-Antipov/mc-publish@v3.3
+        with:
+          modrinth-id: baby-enderman
+          modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          files: build/libs/*.jar
+          loaders: neoforge
+          game-versions: 1.21.11
+          version-type: release
