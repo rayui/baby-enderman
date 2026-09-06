@@ -4,7 +4,7 @@ You made a Minecraft mod! It adds an adorable, tamable **baby Enderman** compani
 
 ## ▶️ Starting the game
 1. Open the **Minecraft Launcher**.
-2. Pick the **NeoForge** profile (the one that says `neoforge-21.11.42`).
+2. Pick the **NeoForge** profile (the one that says `neoforge-26.2.0.79`).
 3. Click **Play**.
 
 The mod is already installed at `~/.minecraft/mods/babyenderman-1.0.0.jar`.

@@ -1,6 +1,6 @@
 # Baby Enderman 🟣👾
 
-A NeoForge mod for **Minecraft 1.21.11** that adds an adorable, tamable **baby Enderman** companion.
+A NeoForge mod for **Minecraft 26.2** that adds an adorable, tamable **baby Enderman** companion.
 
 > Designed by a kid, built together. 💚
 
