@@ -8,7 +8,7 @@ publishes the jar to **Modrinth** and a **GitHub Release**.
 1. **Modrinth project** — at <https://modrinth.com>:
    - Create a project: type **Mod**, name **Baby Enderman**, **slug `baby-enderman`** (must match
      `modrinth-id` in the workflow *and* the `baby-enderman` entry in sunnydale-infra).
-   - Loader **NeoForge**, Minecraft **1.21.11**, license **MIT**, environment **client and server**.
+   - Loader **NeoForge**, Minecraft **26.2**, license **MIT**, environment **client and server**.
    - Save it. (You can publish/submit for review now; it needs at least one version, which step 3
      creates. New projects can sit "under review" briefly before they're publicly listed.)
 
@@ -48,7 +48,7 @@ publishes the jar to **Modrinth** and a **GitHub Release**.
 ## After the first successful Modrinth publish
 
 The infra switch is staged as a **draft PR** in `sunnydale-infra`
-(`minecraft-baby-enderman-modrinth`). Once `baby-enderman` is live on Modrinth with a 1.21.11
+(`minecraft-baby-enderman-modrinth`). Once `baby-enderman` is live on Modrinth with a 26.2
 NeoForge version, mark that PR **ready** and merge it — Flux rolls the survival2 pod and it pulls the
 mod straight from Modrinth (no more committed jar).
 

@@ -134,16 +134,14 @@ public class BabyEnderman extends TamableAnimal {
                         this.setPersistenceRequired();
                         this.navigation.stop();
                         this.level().broadcastEntityEvent(this, (byte) 7); // big purple-heart burst
-                        player.displayClientMessage(
-                                Component.literal("Baby Enderman tamed! Right-click it with an empty hand to ride your shoulder.")
-                                        .withStyle(ChatFormatting.LIGHT_PURPLE),
-                                true);
+                        player.sendOverlayMessage(
+Component.literal("Baby Enderman tamed! Right-click it with an empty hand to ride your shoulder.")
+                                        .withStyle(ChatFormatting.LIGHT_PURPLE));
                     } else {
                         this.level().broadcastEntityEvent(this, (byte) 6); // purple sparkle puff
-                        player.displayClientMessage(
-                                Component.literal("Baby Enderman likes the emerald… (" + this.tameProgress + "/" + EMERALDS_TO_TAME + ")")
-                                        .withStyle(ChatFormatting.LIGHT_PURPLE),
-                                true);
+                        player.sendOverlayMessage(
+Component.literal("Baby Enderman likes the emerald… (" + this.tameProgress + "/" + EMERALDS_TO_TAME + ")")
+                                        .withStyle(ChatFormatting.LIGHT_PURPLE));
                     }
                 }
                 return InteractionResult.SUCCESS;
@@ -170,16 +168,16 @@ public class BabyEnderman extends TamableAnimal {
                 if (!this.level().isClientSide()) {
                     if (this.isPerched()) {
                         this.setPerched(false);
-                        player.displayClientMessage(
-                                Component.literal("Baby Enderman hops down.").withStyle(ChatFormatting.LIGHT_PURPLE), true);
+                        player.sendOverlayMessage(
+Component.literal("Baby Enderman hops down.").withStyle(ChatFormatting.LIGHT_PURPLE));
                     } else {
                         this.setOrderedToSit(false);
                         this.setInSittingPose(false);
                         this.setPerched(true);
                         this.giftCooldown = 200; // first present ~10s after it settles in
                         this.playSound(SoundEvents.ENDERMAN_TELEPORT, 0.4F, 1.8F);
-                        player.displayClientMessage(
-                                Component.literal("Baby Enderman hops onto your shoulder!").withStyle(ChatFormatting.LIGHT_PURPLE), true);
+                        player.sendOverlayMessage(
+Component.literal("Baby Enderman hops onto your shoulder!").withStyle(ChatFormatting.LIGHT_PURPLE));
                     }
                 }
                 return InteractionResult.SUCCESS;

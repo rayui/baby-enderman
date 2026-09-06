@@ -5,12 +5,15 @@ import com.babyenderman.entity.BabyEnderman;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.model.monster.enderman.EndermanModel;
+import net.minecraft.client.renderer.block.BlockModelResolver;
+import net.minecraft.client.renderer.entity.EndermanRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.HumanoidMobRenderer;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.client.renderer.entity.layers.CarriedBlockLayer;
 import net.minecraft.client.renderer.entity.state.EndermanRenderState;
 import net.minecraft.resources.Identifier;
+import net.minecraft.world.level.block.state.BlockState;
 
 /**
  * Renders the baby Enderman. Reuses the vanilla Enderman model but scaled right down (a tiny
@@ -23,9 +26,14 @@ public class BabyEndermanRenderer extends MobRenderer<BabyEnderman, EndermanRend
     // A full Enderman model is ~2.9 blocks tall; this shrinks it to a ~0.6-block baby.
     private static final float BABY_SCALE = 0.2F;
 
+    // Resolves the carried BlockState into the render state's baked model, exactly as vanilla's
+    // EndermanRenderer does (since 26.x the render state owns the model and is populated, not assigned).
+    private final BlockModelResolver blockModelResolver;
+
     public BabyEndermanRenderer(EntityRendererProvider.Context context) {
         // NOTE: the 3rd arg is the SHADOW radius, not the model scale. Model scaling is done in scale().
         super(context, new EndermanModel<>(context.bakeLayer(ModelLayers.ENDERMAN)), 0.18F);
+        this.blockModelResolver = context.getBlockModelResolver();
         this.addLayer(new BabyEndermanEyesLayer(this));
         this.addLayer(new CarriedBlockLayer(this));
     }
@@ -45,7 +53,12 @@ public class BabyEndermanRenderer extends MobRenderer<BabyEnderman, EndermanRend
         super.extractRenderState(entity, state, partialTick);
         HumanoidMobRenderer.extractHumanoidRenderState(entity, state, partialTick, this.itemModelResolver);
         state.isCreepy = false;
-        state.carriedBlock = entity.getCarriedBlock();
+        BlockState carriedBlock = entity.getCarriedBlock();
+        if (carriedBlock != null) {
+            this.blockModelResolver.update(state.carriedBlock, carriedBlock, EndermanRenderer.BLOCK_DISPLAY_CONTEXT);
+        } else {
+            state.carriedBlock.clear();
+        }
     }
 
     @Override
